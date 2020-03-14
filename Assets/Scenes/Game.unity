@@ -1257,6 +1257,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1420075462}
   - component: {fileID: 1420075463}
+  - component: {fileID: 1420075464}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1294,6 +1295,18 @@ MonoBehaviour:
   CourtController: {fileID: 837701718}
   ScoreControllerUI: {fileID: 1368852193}
   MaxTimeAmount: 3
+--- !u!114 &1420075464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420075461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02b0a84aec8880f4a86a66945264d616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1487705400
 GameObject:
   m_ObjectHideFlags: 0

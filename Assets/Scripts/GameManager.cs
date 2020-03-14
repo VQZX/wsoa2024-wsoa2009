@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         CourtController.BeginGame(this);
+        ScoreControllerUI.UpdateScore();
     }
 
     private void ResetTimer(float time)
