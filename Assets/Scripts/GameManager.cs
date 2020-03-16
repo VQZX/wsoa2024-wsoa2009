@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void UpdateTimer()
     {
+        // When timer is complete, begin the game
         if (currentTime <= 0)
         {
             timerComplete = true;
@@ -100,6 +101,9 @@ public class GameManager : MonoBehaviour
 
             StartGame();
         }
+
+        // When timer is still active, decrement the time,
+        // and update the user interface
         currentTime -= Time.deltaTime;
         int roundedOffTimer = Mathf.CeilToInt(currentTime);
         TimerUI.SetTime(roundedOffTimer);

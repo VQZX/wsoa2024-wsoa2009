@@ -63,7 +63,8 @@ public class CourtController : MonoBehaviour
     }
 
     /// <summary>
-    /// When a new game has begun, reset the paddles to the center
+    /// When a new game has begun,
+    /// reset the paddles to the original positions
     /// </summary>
     public void ResetCourt()
     {

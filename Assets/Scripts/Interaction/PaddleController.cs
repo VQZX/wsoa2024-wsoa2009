@@ -13,7 +13,7 @@ public class PaddleController : MonoBehaviour
     public float Speed = 5f;
 
     /// <summary>
-    /// The reference for when the upper bound and lower of the bound
+    /// The reference for the upper bound and the lower bound
     /// </summary>
     public Transform upperBoundary, lowerBoundary;
 
@@ -37,7 +37,6 @@ public class PaddleController : MonoBehaviour
     /// </summary>
     private Vector3 originalPosition;
 
-    
 
     /// <summary>
     /// Returns private value of velocity to ensure that we can read the value of velocity
@@ -50,6 +49,7 @@ public class PaddleController : MonoBehaviour
 
     /// <summary>
     /// Called from GameManager to allow the Paddles to move
+    /// by setting the variable canMove to true
     /// </summary>
     public void Initialise()
     {
