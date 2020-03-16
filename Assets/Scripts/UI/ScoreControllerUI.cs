@@ -9,9 +9,14 @@ public class ScoreControllerUI : MonoBehaviour
     public int MaxScore = 5;
 
     /// <summary>
-    /// The respective texts for displaying the two players scores
+    /// For displaying the player one text score
     /// </summary>
-    public Text playerOneScoreText, playerTwoScoreText;
+    public Text playerOneScoreText;
+
+    /// <summary>
+    /// For displaying the player two text score
+    /// </summary>
+    public Text playerTwoScoreText;
 
     /// <summary>
     /// The current instance of the Game Manager
@@ -24,7 +29,9 @@ public class ScoreControllerUI : MonoBehaviour
     private int playerOneScore, playerTwoScore;
 
 
-    // Display the scores
+    /// <summary>
+    /// Display the score
+    /// </summary>
     public void UpdateScore()
     {
         playerOneScoreText.text = playerOneScore.ToString();
@@ -40,6 +47,7 @@ public class ScoreControllerUI : MonoBehaviour
     /// </param>
     public void IncrementPlayerScore(int id)
     {
+        
         if (id == 1)
         {
             playerOneScore++;
@@ -49,8 +57,11 @@ public class ScoreControllerUI : MonoBehaviour
             playerTwoScore++;
         }
 
+        // Display the score to the screen
         UpdateScore();
 
+        // When the either score is equal or greater than the max score,
+        // tell the game manager who won, and with what score
         if (playerOneScore >= MaxScore)
         {
             GameManager.PlayerWins(1, playerOneScore, 2, playerTwoScore);
@@ -62,7 +73,7 @@ public class ScoreControllerUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Return the scores to 0, and display
+    /// Return the scores to 0, and display the new score (0 for player 1, 0 for player 2) to the screen
     /// </summary>
     public void ResetScore()
     {

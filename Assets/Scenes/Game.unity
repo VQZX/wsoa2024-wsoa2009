@@ -457,7 +457,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 7.9199996
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114297515644810432, guid: 109ca9f349b14bf4fb5e30036009137d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 109ca9f349b14bf4fb5e30036009137d, type: 3}
 --- !u!4 &312223889 stripped
 Transform:
@@ -1292,6 +1293,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FirstDirection: {x: 1, y: 0}
   MaxSpeed: 8
+  GameManager: {fileID: 1420075463}
+  LeftGoalZone: {fileID: 721001839}
+  RightGoalZone: {fileID: 312223889}
 --- !u!1 &832428309
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,7 +1598,8 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114297515644810432, guid: 109ca9f349b14bf4fb5e30036009137d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 109ca9f349b14bf4fb5e30036009137d, type: 3}
 --- !u!1 &1141974664
 GameObject:
@@ -2022,9 +2027,9 @@ MonoBehaviour:
   UpButton: 273
   DownButton: 274
   Speed: 5
-  upperBoundary: {fileID: 758863817}
-  lowerBoundary: {fileID: 1942472904}
-  offsetFromBoundary: 1
+  UpperBoundary: {fileID: 758863817}
+  LowerBoundary: {fileID: 1942472904}
+  OffsetFromBoundary: 1
 --- !u!1 &1861495635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,9 +2180,9 @@ MonoBehaviour:
   UpButton: 119
   DownButton: 115
   Speed: 5
-  upperBoundary: {fileID: 758863817}
-  lowerBoundary: {fileID: 1942472904}
-  offsetFromBoundary: 1
+  UpperBoundary: {fileID: 758863817}
+  LowerBoundary: {fileID: 1942472904}
+  OffsetFromBoundary: 1
 --- !u!1 &1901269977
 GameObject:
   m_ObjectHideFlags: 0

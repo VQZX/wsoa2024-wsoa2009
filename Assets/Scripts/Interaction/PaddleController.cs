@@ -3,24 +3,24 @@
 public class PaddleController : MonoBehaviour
 {
     /// <summary>
-    /// Inputs
+    /// Inputs for controlling upwards and downwards motion
     /// </summary>
     public KeyCode UpButton, DownButton;
 
     /// <summary>
-    /// 5 units for second
+    /// 5 units per second
     /// </summary>
     public float Speed = 5f;
 
     /// <summary>
     /// The reference for the upper bound and the lower bound
     /// </summary>
-    public Transform upperBoundary, lowerBoundary;
+    public Transform UpperBoundary, LowerBoundary;
 
     /// <summary>
     /// To adjust where the paddle stops in relation to the boundary
     /// </summary>
-    public float offsetFromBoundary = 1;
+    public float OffsetFromBoundary = 1;
 
     /// <summary>
     /// A means of controlling stopping input from the player
@@ -40,7 +40,7 @@ public class PaddleController : MonoBehaviour
 
     /// <summary>
     /// Returns private value of velocity to ensure that we can read the value of velocity
-    /// but not able to change it
+    /// but are not able to change it
     /// </summary>
     public Vector2 GetVelocity()
     {
@@ -74,7 +74,7 @@ public class PaddleController : MonoBehaviour
             return;
         }
 
-        HandleInput();
+        ProcessInput();
     }
 
     /// <summary>
@@ -96,30 +96,49 @@ public class PaddleController : MonoBehaviour
     /// <summary>
     /// If UpButton pressed, move the paddle up. If the Down button is pressed move the paddle down.
     /// </summary>
-    private void HandleInput()
-    { 
+    private void ProcessInput()
+    {
+        /*
+         * There are several ways to perform input in Unity.
+         * Please consider reading up on the different methods
+         * ( Input.GetButton("Fire1"), Input.GetAxis("Vertical"), Input.GetKey(KeyCode.UpArrow) etc)
+         * It is important to understand when the different methods are appropriate.
+         * Consider which approach to use for your specific solution.
+         */
+
         if (Input.GetKey(UpButton))
         {
             // The next upwards position
-            float yPosition = CalculateUpPosition();
+            // We are calculating the y-position every 
+            float yPosition = transform.position.y + Time.deltaTime * Speed;
 
             // Ensure and validate the position only exists within the bounds of the court
-            yPosition = ClampPaddleBetweenBoundaries(yPosition);
+            // If the yPosition is more than [the upper boundary - offsetFromBoundary],
+            // return [the upper boundary - offsetFromBoundary].
+            // If the y-position is less than [the lower boundary + offsetFromBoundary],
+            // return [the lower boundary + offsetFromBoundary].
+            // Otherwise, return the yPosition
+            yPosition = Mathf.Clamp(yPosition, LowerBoundary.position.y + OffsetFromBoundary,
+                UpperBoundary.position.y - OffsetFromBoundary);
 
             // Assign the newly calculated and validated position
             transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
 
             // Set the velocity to be upwards
             velocity = Vector3.up * Speed;
-
         }
         else if (Input.GetKey(DownButton))
         {
-            // The next upwards position
-            float yPosition = CalculateDownPosition();
+            // The next downwards position
+            float yPosition = transform.position.y - Time.deltaTime * Speed;
 
-            // Ensure and validate the position only exists within the bounds of the court
-            yPosition = ClampPaddleBetweenBoundaries(yPosition);
+            // If the yPosition is more than [the upper boundary - offsetFromBoundary],
+            // return [the upper boundary - offsetFromBoundary].
+            // If the y-position is less than [the lower boundary + offsetFromBoundary],
+            // return [the lower boundary + offsetFromBoundary].
+            // Otherwise, return the yPosition
+            yPosition = Mathf.Clamp(yPosition, LowerBoundary.position.y + OffsetFromBoundary,
+                UpperBoundary.position.y - OffsetFromBoundary);
 
             // Assign the newly calculated and validated position
             transform.position = new Vector3(transform.position.x, yPosition, transform.position.z);
@@ -127,39 +146,5 @@ public class PaddleController : MonoBehaviour
             // Set the velocity to be downwards
             velocity = Vector3.down * Speed;
         }
-
-    }
-    
-    /// <summary>
-    /// The current y-position minus speed * Time.deltaTime.
-    /// Multiply by Time.deltaTime to ensure the calculation is per-frame, not per-second
-    /// </summary>
-    private float CalculateDownPosition()
-    {
-        return transform.position.y - Time.deltaTime * Speed;
-    }
-
-    /// <summary>
-    /// If the yPosition is more than [the upper boundary - offsetFromBoundary],
-    /// return [the upper boundary - offsetFromBoundary].
-    /// If the y-position is less than [the lower boundary + offsetFromBoundary],
-    /// return [the lower boundary + offsetFromBoundary].
-    /// Otherwise, return the yPosition
-    /// </summary>
-    private float ClampPaddleBetweenBoundaries(float yPosition)
-    {
-        return Mathf.Clamp(yPosition, lowerBoundary.position.y + offsetFromBoundary, 
-            upperBoundary.position.y - offsetFromBoundary);
-    }
-
-    /// <summary>
-    /// The current y-position plus speed * Time.deltaTime.
-    /// Multiply by Time.deltaTime to ensure the calculation is per-frame, not per-second
-    /// </summary>
-    private float CalculateUpPosition()
-    {
-        float yPosition;
-        yPosition = transform.position.y + Time.deltaTime * Speed;
-        return yPosition;
     }
 }

@@ -7,20 +7,12 @@ public class CourtController : MonoBehaviour
     /// </summary>
     public PaddleController PaddleOne;
 
-    /// <summary>
-    /// Goal End Zone to the right
-    /// </summary>
-    public GoalEndZone EndZoneOne;
 
     /// <summary>
     /// Paddle to the left
     /// </summary>
     public PaddleController PaddleTwo;
 
-    /// <summary>
-    /// Goal End Zone to left
-    /// </summary>
-    public GoalEndZone EndZoneTwo;
 
     /// <summary>
     /// The current ball being used
@@ -35,9 +27,6 @@ public class CourtController : MonoBehaviour
         CurrentBall.InitialiseBall();
         PaddleOne.Initialise();
         PaddleTwo.Initialise();
-
-        EndZoneOne.Initialise(gameManager);
-        EndZoneTwo.Initialise(gameManager);
     }
 
     /// <summary>
@@ -54,9 +43,9 @@ public class CourtController : MonoBehaviour
     /// <summary>
     /// Stop any interaction on the ball, and the paddles
     /// </summary>
-    public void FreezeObjects()
+    public void StopObjectsInteraction()
     {
-        CurrentBall.Freeze();
+        CurrentBall.PreventAnyBallInteractions();
 
         PaddleOne.StopInput();
         PaddleTwo.StopInput();

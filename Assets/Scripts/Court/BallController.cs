@@ -13,9 +13,20 @@ public class BallController : MonoBehaviour
     public float MaxSpeed = 8f;
 
     /// <summary>
+    /// Reference to the Game Manager
+    /// </summary>
+    public GameManager GameManager;
+
+    /// <summary>
+    /// To hold the positions of the left and right goal zones
+    /// </summary>
+    public Transform LeftGoalZone, RightGoalZone;
+
+    /// <summary>
     /// The attached Rigidbody2D
     /// </summary>
     private Rigidbody2D rigidbody2D;
+
 
     /// <summary>
     /// The first position of the ball
@@ -35,6 +46,24 @@ public class BallController : MonoBehaviour
         originalPosition = transform.position;
         FirstDirection = FirstDirection.normalized;
         rigidbody2D.velocity = FirstDirection * MaxSpeed;
+    }
+
+    /// <summary>
+    /// Check if the ball has passed the goal zones, if so, send score update to Game Manager
+    /// </summary>
+    private void Update()
+    {
+        if (transform.position.x < LeftGoalZone.position.x)
+        {
+            int playerId = 2;
+            GameManager.GoalScored(playerId);
+
+        }
+        else if (transform.position.x > RightGoalZone.position.x)
+        {
+            int playerId = 1;
+            GameManager.GoalScored(playerId);
+        }
     }
 
     /// <summary>
@@ -65,7 +94,7 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// Prevent any ball interactions
     /// </summary>
-    public void Freeze()
+    public void PreventAnyBallInteractions()
     {
         transform.position = originalPosition;
         rigidbody2D.velocity = Vector3.zero;
@@ -74,10 +103,14 @@ public class BallController : MonoBehaviour
     /// <summary>
     /// If the ball hit a paddle, set the ball vertical velocity to be the paddles vertical velocity
     /// </summary>
-    /// <param name="collision2D"></param>
     private void OnCollisionEnter2D(Collision2D collision2D)
     {
         PaddleController paddle = collision2D.gameObject.GetComponent<PaddleController>();
+
+        // If the paddle does not exist (i.e. it is not attached to the gameObject, 
+        // we DO NOT work with it. )
+        // Prevents NullReferenceException Error
+        // For more information see here: https://www.youtube.com/watch?v=Y8buHhKcjRc
         if (paddle != null)
         {
             AddPaddleVelocityToBall(paddle);
@@ -85,7 +118,8 @@ public class BallController : MonoBehaviour
     }
 
     /// <summary>
-    /// Set the balls vertical velocity to be the paddles, and then limit the ball speed to MaxSpeed
+    /// Set the balls vertical velocity to be the paddles,
+    /// and then limit the ball speed to MaxSpeed
     /// </summary>
     private void AddPaddleVelocityToBall(PaddleController paddle)
     {
@@ -95,10 +129,36 @@ public class BallController : MonoBehaviour
         // Paddle vertical velocity
         float yVelocity = paddle.GetVelocity().y;
 
+        if (yVelocity == 0)
+        {
+            return;
+        }
+
         // Limit the speed of the ball to MaxSpeed
         Vector3 newVelocity = new Vector3(xVelocity, yVelocity);
+
+        /*
+         * When using vectors it is important to realise that they
+         * are arrows, and have two major properties
+         * 1. Magnitude (how long the arrow is)
+         * 2. Direction (which way the arrow is pointing)
+         *
+         * When we Normalize an arrow (a vector), we ensure the length is 1 unit,
+         * but maintain its direction.
+         *
+         *
+         * Brackeys has a very useful explanation on Vectors for more information:
+         *
+         * https://www.youtube.com/watch?v=wXI9_olSrqo
+         */
+
         newVelocity = newVelocity.normalized;
+        
+        // We assign our own magnitude to the vector, to ensure the velocity vector
+        // Maintains a magnitude of MaxSpeed
         newVelocity *= MaxSpeed;
+
+        // Assign the calculated velocity to rigidbody
         rigidbody2D.velocity = newVelocity;
     }
 }

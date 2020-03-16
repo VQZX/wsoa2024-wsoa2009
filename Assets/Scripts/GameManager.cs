@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         OutcomeUI.Activate(winningPlayer, winningPlayerScore, losingPlayer, losingPlayerScore);
 
         // Freeze Objects
-        CourtController.FreezeObjects();
+        CourtController.StopObjectsInteraction();
     }
 
     /// <summary>

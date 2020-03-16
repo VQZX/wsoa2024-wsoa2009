@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class OutcomeUI : MonoBehaviour
@@ -25,8 +24,13 @@ public class OutcomeUI : MonoBehaviour
     public void Activate(int winningPlayer, int winningPlayerScore, int losingPlayer, int losingPlayerScore)
     {
         gameObject.SetActive(true);
-        string output = 
-            string.Format(format, winningPlayer, winningPlayerScore, losingPlayer, losingPlayerScore);
+
+
+        // Construct the output string (the text displayed) with the relevant information.
+        // We use '+' to combine string and the '\n' as a line space.
+        string output = "Player " + winningPlayer + " wins with " + winningPlayerScore + " \n\n\nPlayer " +
+                        losingPlayerScore + " loses" +
+                        "with " + losingPlayerScore + " points.";
         OutputText.text = output;
     }
 
